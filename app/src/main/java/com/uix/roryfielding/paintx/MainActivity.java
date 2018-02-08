@@ -15,17 +15,17 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity{
 
-    private DrawingView drawView;
-    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn;
-    private float smallBrush, mediumBrush, largeBrush;
-    private View.OnClickListener brushclick, eraseclick, newclick, saveclick;
+    private DrawingView drawView; //declare view
+    private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn; //declare buttons
+    private float smallBrush, mediumBrush, largeBrush; //declare brush sizes
+    private View.OnClickListener brushclick, eraseclick, newclick, saveclick; //declare listeners
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Setup();
+        Setup(); //call set up
     }
 
     public void Setup(){
@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity{
         drawBtn = (ImageButton)findViewById(R.id.draw_btn);
         eraseBtn = (ImageButton)findViewById(R.id.erase_btn);
         newBtn = (ImageButton) findViewById(R.id.new_btn);
-        saveBtn = (ImageButton) findViewById(R.id.save_btn);
+        saveBtn = (ImageButton) findViewById(R.id.save_btn); //assign buttons in context
 
-        LinearLayout paintLayout = (LinearLayout)findViewById(R.id.paint_colors);
+        LinearLayout paintLayout = (LinearLayout)findViewById(R.id.paint_colors); //assign layout
         currPaint = (ImageButton)paintLayout.getChildAt(0);
         currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity{
         mediumBrush = getResources().getInteger(R.integer.medium_size);
         largeBrush = getResources().getInteger(R.integer.large_size);
 
-        drawView.setBrushSize(mediumBrush);
+        drawView.setBrushSize(mediumBrush); //initialise brush size
 
         brushclick = new OnClickListener() {
             @Override
@@ -93,15 +93,19 @@ public class MainActivity extends AppCompatActivity{
         };
         drawBtn.setOnClickListener(brushclick);
 
+        //new listener for eraser
+
         eraseclick = new OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (view.getId() == R.id.erase_btn) {
                     //switch to erase - choose size
                 }
-                final Dialog brushDialog = new Dialog(drawView.getContext());
+                final Dialog brushDialog = new Dialog(drawView.getContext()); //declare dialog screen
                 brushDialog.setTitle("Eraser size:");
-                brushDialog.setContentView(R.layout.brush_chooser);
+                brushDialog.setContentView(R.layout.brush_chooser); //change layout to select brush
+
+                //depending on brush size selected, switch to this size and set eraser to true
 
                 ImageButton smallBtn = (ImageButton) brushDialog.findViewById(R.id.small_brush);
                 smallBtn.setOnClickListener(new OnClickListener() {
@@ -136,6 +140,8 @@ public class MainActivity extends AppCompatActivity{
 
         eraseBtn.setOnClickListener(eraseclick);
 
+        //new listener to create new canvas
+
         newclick = new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,6 +168,8 @@ public class MainActivity extends AppCompatActivity{
         };
 
         newBtn.setOnClickListener(newclick);
+
+        //new listener to save the graphic
 
         saveclick = new OnClickListener() {
             @Override
@@ -205,6 +213,8 @@ public class MainActivity extends AppCompatActivity{
         saveBtn.setOnClickListener(saveclick);
 
     }
+
+    //function to update the colour of the paint depending on the palette selected
 
     public void paintClicked(View view){
         drawView.setErase(false);
